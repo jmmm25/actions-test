@@ -18,12 +18,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Create commits
+      - name: Insert current time into report.txt
         run: |
-          git config user.name 'jmmm25'
-          git config user.email 'jmkim9302@gmail.com'
-          date +%s > report.txt
-          git commit -m "Add untracked file during workflow"
+          echo "Current time: $(date +'%H:%M:%S')" >> report.txt
+  
+      - name: Commit changes
+        run: |
+            git config user.name 'jmmm25'
+            git config user.email 'jmkim9302@gmail.com'
+            git add report.txt
+            git commit -m "Update report.txt with current time"      
       
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
